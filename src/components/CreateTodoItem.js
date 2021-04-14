@@ -50,7 +50,7 @@ function CreateTodoItem({addItemFn}){
 
 
 CreateTodoItem.propTypes = {
-    callback: PropTypes.func.isRequired
+    addItemFn: PropTypes.func.isRequired
 }
 
 export default CreateTodoItem;

@@ -21,7 +21,7 @@ function App() {
         <h1 id="title">Todo list</h1>
       </div>
       <div className="center">
-        <CreateTodoItem callback={addItem}></CreateTodoItem>
+        <CreateTodoItem addItemFn={addItem}></CreateTodoItem>
       </div>
       <div>
         <TodoList items={items}></TodoList>

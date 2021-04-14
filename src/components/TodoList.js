@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import TodoModel from "../models/TodoModel";
 import TodoItem from './TodoItem';
 import "../App.css";
 import Grid from "@material-ui/core/Grid";
@@ -22,7 +21,7 @@ function TodoList({items}){
 }
 
 TodoList.propTypes = {
-    items: PropTypes.arrayOf(TodoModel).isRequired
+    items: PropTypes.array.isRequired
 }
 
 export default TodoList;
