@@ -1,13 +1,27 @@
 import './App.css';
+import CreateTodoItem from './components/CreateTodoItem';
 import TodoList from './components/TodoList';
 import TodoModel from './models/TodoModel';
+import {useState} from 'react';
 
 function App() {
-  const items = [new TodoModel("title", "desc"), new TodoModel("title two", "desc two"), new TodoModel("title three", "desc three"), new TodoModel("title four", "lorem"), new TodoModel("title four", "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem")];
+  const sampleItems = [new TodoModel("title", "desc"), new TodoModel("title two", "desc two"), new TodoModel("title three", "desc three"), new TodoModel("title four", "lorem"), new TodoModel("title four", "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem")];
+  
+  const [items, setItems] = useState(sampleItems);
+
+  const addItem = (title, desc) => {
+    const newItem = new TodoModel(title, desc);
+
+    setItems([...items, newItem]);
+  }
+  
   return (
     <div className="main-div">
       <div className="center">
         <h1 id="title">Todo list</h1>
+      </div>
+      <div className="center">
+        <CreateTodoItem callback={addItem}></CreateTodoItem>
       </div>
       <div>
         <TodoList items={items}></TodoList>

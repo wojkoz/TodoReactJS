@@ -11,7 +11,7 @@ function TodoList({items}){
            <Grid container spacing={3}>
            {
                 items.map((item, index) => {
-                    return <Grid item xs={6}>
+                    return <Grid key={Math.random()*100} item xs={6}>
                         <TodoItem key={index} item={item} maxDescLength={25}></TodoItem>
                         </Grid>
                     })
@@ -22,7 +22,7 @@ function TodoList({items}){
 }
 
 TodoList.propTypes = {
-    items: PropTypes.arrayOf(TodoModel)
+    items: PropTypes.arrayOf(TodoModel).isRequired
 }
 
 export default TodoList;
