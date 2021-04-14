@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import TodoList from './components/TodoList';
+import TodoModel from './models/TodoModel';
 
 function App() {
+  const items = [new TodoModel("title", "desc"), new TodoModel("title two", "desc two"), new TodoModel("title three", "desc three"), new TodoModel("title four", "desc four")];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-div">
+      <div className="center">
+        <h1 id="title">Todo list</h1>
+      </div>
+      <div>
+        <TodoList items={items}></TodoList>
+      </div>
     </div>
   );
 }
