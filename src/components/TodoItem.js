@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+import "./TodoItem.css"
 
 function TodoItem({item}){
     return (
-        <div className=".center">
-            <div>{item.title}</div>
+        <div className="item">
+            <div><h3>{item.title}</h3></div>
             <div>{item.description}</div>
         </div>
     );

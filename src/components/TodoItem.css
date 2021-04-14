@@ -1,0 +1,12 @@
+.item {
+  border: 1px solid cadetblue;
+  margin-bottom: 2%;
+  flex: 2;
+  flex-wrap: wrap;
+  margin-right: 5%;
+}
+
+.item div h3 {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
