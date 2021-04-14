@@ -10,7 +10,11 @@ function TodoList({items}){
         <div className="center grid">
            <Grid container spacing={3}>
            {
-                items.map((item, index) => {return <Grid item xs={6}><TodoItem key={index} item={item}></TodoItem></Grid>})
+                items.map((item, index) => {
+                    return <Grid item xs={6}>
+                        <TodoItem key={index} item={item} maxDescLength={25}></TodoItem>
+                        </Grid>
+                    })
             }
            </Grid>
         </div>
