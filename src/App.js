@@ -14,9 +14,14 @@ function App() {
 
     setItems([...items, newItem]);
   }
+
+  const deleteItem = (id) => {
+    const itemsAfterDelete = items.filter((item) => item.id !== id);
+    setItems(itemsAfterDelete);
+  }
   
   return (
-    <div className="main-div">
+   <div className="main-div">
       <div className="center">
         <h1 id="title">Todo list</h1>
       </div>
@@ -24,7 +29,7 @@ function App() {
         <CreateTodoItem addItemFn={addItem}></CreateTodoItem>
       </div>
       <div>
-        <TodoList items={items}></TodoList>
+        <TodoList items={items} deleteItemCallback={deleteItem}></TodoList>
       </div>
     </div>
   );

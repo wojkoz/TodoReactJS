@@ -10,4 +10,6 @@
 .item div h3 {
   margin-top: 1%;
   margin-bottom: 1%;
+  text-align: justify;
+  padding-left: 2%;
 }
