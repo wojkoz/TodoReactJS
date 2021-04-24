@@ -1,32 +1,26 @@
 import "./App.css";
 import CreateTodoItem from "./components/CreateTodoItem";
 import TodoList from "./components/TodoList";
-import TodoModel from "./models/TodoModel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { addItem, deleteItem, getItems } from "./repository/Repository.js";
 
 function App() {
-  const sampleItems = [
-    new TodoModel("title", "desc"),
-    new TodoModel("title two", "desc two"),
-    new TodoModel("title three", "desc three"),
-    new TodoModel("title four", "lorem"),
-    new TodoModel(
-      "title four",
-      "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem"
-    ),
-  ];
 
-  const [items, setItems] = useState(sampleItems);
+  const [isUserLogged, setIsUserLogged] = useState(false);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const list = getItems(isUserLogged);
+    setItems(list);
+  },[]);
 
-  const addItem = (title, desc) => {
-    const newItem = new TodoModel(title, desc);
-
-    setItems([...items, newItem]);
+  const addTodoItem = (title, desc) => {
+    const list = addItem(title, desc, isUserLogged);
+    setItems(list);
   };
 
-  const deleteItem = (id) => {
-    const itemsAfterDelete = items.filter((item) => item.id !== id);
-    setItems(itemsAfterDelete);
+  const deleteTodoItem = (id) => {
+    const list = deleteItem(id, isUserLogged);
+    setItems(list);
   };
 
   return (
@@ -35,10 +29,13 @@ function App() {
         <h1 id="title">Todo list</h1>
       </div>
       <div className="center">
-        <CreateTodoItem addItemFn={addItem}></CreateTodoItem>
+        <h1 id="title">Todo list</h1>
+      </div>
+      <div className="center">
+        <CreateTodoItem addItemFn={addTodoItem}></CreateTodoItem>
       </div>
       <div>
-        <TodoList items={items} deleteItemCallback={deleteItem}></TodoList>
+        <TodoList items={items} deleteItemCallback={deleteTodoItem}></TodoList>
       </div>
     </div>
   );
