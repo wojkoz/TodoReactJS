@@ -1,5 +1,8 @@
 import {loadFromLocalStorage, saveToLocalStorage} from './LocalRepository'
 import TodoModel from '../models/TodoModel'
+import {login, register} from './RemoteRepository'
+
+export {login as loginUser, register as registerUser};
 
 export const addItem = (title, desc, isUserLogged) => {
     if(isUserLogged){
