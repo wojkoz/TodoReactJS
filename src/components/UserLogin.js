@@ -29,12 +29,12 @@ function UserLogin({ loginCallback, errorCallabck }) {
   };
 
   const handleLogin = async () => {
-    const [user, errors] = await loginUser(values.email, values.password);
+    const [user] = await loginUser(values.email, values.password);
 
-    if (errors !== null) {
+    if (user !== null) {
       loginCallback(user);
     } else {
-      errorCallabck(errors);
+      errorCallabck("Couldn't login User!");
     }
   };
 

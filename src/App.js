@@ -9,30 +9,39 @@ function App() {
   const [userData, setUserData] = useState({ logged: false, user: {} });
   const [items, setItems] = useState([]);
   useEffect(() => {
-    const list = getItems(false);
-    setItems(list);
-  }, []);
+    fetchItems();
+    async function fetchItems() {
+      const list = await getItems(
+        userData.logged,
+        userData.user.id,
+        userData.user.userName
+      );
+      setItems(list);
+    }
+  }, [userData]);
 
   const setUser = (user) => {
     if (user.id !== undefined) {
       setUserData({ logged: true, user: user });
+    } else {
+      setUserData({ logged: false, user: {} });
     }
   };
 
-  const addTodoItem = (title, desc) => {
-    const list = addItem(title, desc, userData.logged);
+  const addTodoItem = async (title, desc) => {
+    const list = await addItem(title, desc, userData, items);
     setItems(list);
   };
 
-  const deleteTodoItem = (id) => {
-    const list = deleteItem(id, userData.logged);
+  const deleteTodoItem = async (id) => {
+    const list = await deleteItem(id, userData, items);
     setItems(list);
   };
 
   return (
     <div className="main-div">
       <div className="center">
-        <h1>Login</h1>
+        <h1>{userData.logged ? userData.user.userName : "Login"}</h1>
         <Login setUserLoggedCallback={setUser}></Login>
       </div>
       <div className="center">

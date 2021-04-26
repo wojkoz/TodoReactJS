@@ -41,7 +41,16 @@ function UserRegister({ errorCallabck }) {
 
     if (!registered) {
       errorCallabck(error.message);
-      setValues({ ...values, errors: error.errors.join("\n") });
+      setValues({ ...values, errors: error.errors });
+    } else {
+      errorCallabck("Successfully registered!");
+      setValues({
+        password: "",
+        showPassword: false,
+        email: "",
+        username: "",
+        errors: "",
+      });
     }
   };
 

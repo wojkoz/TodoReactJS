@@ -46,14 +46,16 @@ function Login({ setUserLoggedCallback }) {
   if (values.user !== null) {
     return (
       <div>
-        {values.user.username}
-        <Button
-          style={{ marginTop: 20 }}
-          variant="contained"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
+        <h2>{values.user.username}</h2>
+        <div>
+          <Button
+            style={{ marginTop: 20 }}
+            variant="contained"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
     );
   } else {
@@ -78,7 +80,7 @@ function Login({ setUserLoggedCallback }) {
               horizontal: "left",
             }}
             open={values.openSnackbar}
-            autoHideDuration={6000}
+            autoHideDuration={4000}
             onClose={handleClose}
             message={values.error}
             action={

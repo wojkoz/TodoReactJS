@@ -1,44 +1,65 @@
-import {loadFromLocalStorage, saveToLocalStorage} from './LocalRepository'
-import TodoModel from '../models/TodoModel'
-import {login, register} from './RemoteRepository'
+import { loadFromLocalStorage, saveToLocalStorage } from "./LocalRepository";
+import TodoModel from "../models/TodoModel";
+import {
+  login,
+  register,
+  createItem,
+  deleteItem as remoteDeleteItem,
+  getItems as remoteGetItems,
+} from "./RemoteRepository";
 
-export {login as loginUser, register as registerUser};
+export { login as loginUser, register as registerUser };
 
-export const addItem = (title, desc, isUserLogged) => {
-    if(isUserLogged){
-        //todo: add api integration
-        return [];
-    }else{
-        const newItem = new TodoModel(title, desc);
-        
-        const list = loadFromLocalStorage();
-        
-        const updatedList = [...list, newItem];
+export const addItem = async (title, desc, userData, items) => {
+  let updatedList = null;
+  if (userData.logged) {
+    const [todo] = await createItem(userData.user.id, title, desc);
+    updatedList = [...items, todo];
+    saveToLocalStorage(updatedList, userData.user.userName);
+  } else {
+    const newItem = new TodoModel(title, desc);
+    updatedList = [...items, newItem];
+    saveToLocalStorage(updatedList);
+  }
 
-        saveToLocalStorage(updatedList);
+  return updatedList;
+};
 
-        return updatedList;
+export const deleteItem = async (id, userData, items) => {
+  let isDeleted = null;
+  let updatedList = null;
+
+  if (userData.logged) {
+    isDeleted = await remoteDeleteItem(id);
+
+    if (!isDeleted) {
+      return items;
     }
-}
+    updatedList = items.filter((item) => item.todoId !== id);
+    saveToLocalStorage(updatedList, userData.user.userName);
+    return updatedList;
+  }
 
-export const deleteItem = (id, isUserLogged) => {
-    if(isUserLogged){
-        //Todo: add api integration
-        return [];
-    }else{
-        const list = loadFromLocalStorage();
-        const updatedList = list.filter((item) => item.id !== id);
-        saveToLocalStorage(updatedList);
+  updatedList = items.filter((item) => item.todoId !== id);
+  saveToLocalStorage(updatedList);
+  return updatedList;
+};
 
-        return updatedList;
+export const getItems = async (
+  isUserLogged,
+  userId = null,
+  userName = null
+) => {
+  if (isUserLogged) {
+    const [succeded, todos] = await remoteGetItems(userId);
+    if (succeded) {
+      if (userName !== null) {
+        saveToLocalStorage(todos, userName);
+      }
+      return todos;
     }
-}
-
-export const getItems = (isUserLogged) => {
-    if(isUserLogged){
-        //Todo: add api integration
-        return [];
-    }else{
-        return loadFromLocalStorage();
-    }
-}
+    return loadFromLocalStorage(userName);
+  } else {
+    return loadFromLocalStorage();
+  }
+};

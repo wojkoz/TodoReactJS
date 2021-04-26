@@ -18,7 +18,7 @@ function TodoItem({ item, maxDescLength = 10, deleteItemCallback }) {
           <Tooltip title="Delete item">
             <DeleteIcon
               fontSize="small"
-              onClick={() => deleteItemCallback(item.id)}
+              onClick={async () => await deleteItemCallback(item.todoId)}
             ></DeleteIcon>
           </Tooltip>
         </Grid>
