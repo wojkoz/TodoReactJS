@@ -31,8 +31,7 @@ export const deleteItem = async (id, userData, items) => {
 
   if (userData.logged) {
     isDeleted = await remoteDeleteItem(id);
-
-    if (!isDeleted) {
+    if (!isDeleted[0]) {
       return items;
     }
     updatedList = items.filter((item) => item.todoId !== id);

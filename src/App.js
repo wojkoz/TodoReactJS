@@ -21,7 +21,7 @@ function App() {
   }, [userData]);
 
   const setUser = (user) => {
-    if (user.id !== undefined) {
+    if (user !== null) {
       setUserData({ logged: true, user: user });
     } else {
       setUserData({ logged: false, user: {} });

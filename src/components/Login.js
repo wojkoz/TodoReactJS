@@ -36,6 +36,7 @@ function Login({ setUserLoggedCallback }) {
   };
 
   const handleLogout = () => {
+    setUserLoggedCallback(null);
     setValues({
       error: "",
       user: null,
