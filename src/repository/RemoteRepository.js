@@ -1,23 +1,25 @@
 import UserModel from "../models/UserModel";
 import TodoModel from "../models/TodoModel";
 
-const BASE_URL = "https://localhost:5001/api/";
+const BASE_URL = "http://localhost:8000/api/";
 const TOKEN = "TOKEN";
 
 export const login = async (email, password) => {
   const data = {
     password: password,
-    email: email,
+    username: email,
   };
+  //username <- email prop name
 
   const response = await fetchData(
-    BASE_URL + "Authenticate/login",
+    BASE_URL + "authenticate/login",
     data,
     "POST",
     false
   );
 
   if (!response.ok) {
+    console.log(response);
     const awaitedRes = JSON.parse(await response.text());
     return [null, { message: awaitedRes.message, errors: awaitedRes.errors }];
   }
