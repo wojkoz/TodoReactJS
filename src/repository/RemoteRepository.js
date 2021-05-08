@@ -57,26 +57,30 @@ export const register = async (email, username, password) => {
 
 export const createItem = async (userId, title, description) => {
   const data = {
-    userId: userId,
     title: title,
     description: description,
   };
 
-  const response = await fetchData(BASE_URL + "todo", data, "POST", true);
+  const response = await fetchData(
+    `${BASE_URL}user/${userId}/todo`,
+    data,
+    "POST",
+    true
+  );
 
   if (!response.ok) {
-    const awaitedRes = JSON.parse(await response.text());
+    const error = await response.text();
+    const awaitedRes = JSON.parse(error);
     return [null, { message: awaitedRes.message, errors: awaitedRes.errors }];
   }
-
   const body = JSON.parse(await response.text());
   const todo = parseToTodoItem(body);
   return [todo, null];
 };
 
-export const deleteItem = async (id) => {
+export const deleteItem = async (userId, id) => {
   const response = await fetchData(
-    BASE_URL + "todo/" + id,
+    `${BASE_URL}user/${userId}/todo/${id}`,
     null,
     "DELETE",
     true
@@ -90,8 +94,13 @@ export const deleteItem = async (id) => {
   return [true, null];
 };
 
-export const getItems = async (id) => {
-  const response = await fetchData(BASE_URL + "todo/" + id, {}, "Get", true);
+export const getItems = async (userId) => {
+  const response = await fetchData(
+    `${BASE_URL}user/${userId}/todo`,
+    {},
+    "Get",
+    true
+  );
 
   if (!response.ok) {
     const awaitedRes = JSON.parse(await response.text());
@@ -136,7 +145,12 @@ const parseToUser = (data) => {
 };
 
 const parseToTodoItem = (todo) => {
-  return new TodoModel(todo.title, todo.description, todo.todoId, todo.userId);
+  return new TodoModel(
+    todo.title,
+    todo.description ?? "",
+    todo.todoId,
+    todo.userId
+  );
 };
 
 const parseToTodos = (todos) => {
