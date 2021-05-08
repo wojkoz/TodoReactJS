@@ -81,14 +81,14 @@ export const createItem = async (userId, title, description) => {
 export const deleteItem = async (userId, id) => {
   const response = await fetchData(
     `${BASE_URL}user/${userId}/todo/${id}`,
-    null,
+    {},
     "DELETE",
     true
   );
 
   if (!response.ok) {
-    const awaitedRes = JSON.parse(await response.text());
-    return [false, { message: awaitedRes.message, errors: awaitedRes.errors }];
+    const error = await response.text();
+    return [false, { message: error, errors: error }];
   }
 
   return [true, null];
@@ -148,8 +148,8 @@ const parseToTodoItem = (todo) => {
   return new TodoModel(
     todo.title,
     todo.description ?? "",
-    todo.todoId,
-    todo.userId
+    todo.id,
+    todo.user_id
   );
 };
 

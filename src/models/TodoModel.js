@@ -4,12 +4,7 @@ export default class TodoModel {
   description;
   userId;
 
-  constructor(
-    title,
-    description,
-    todoId = Math.random() * 100,
-    userId = Math.random() * 100
-  ) {
+  constructor(title, description, todoId, userId) {
     this.todoId = todoId;
     this.title = title;
     this.description = description;

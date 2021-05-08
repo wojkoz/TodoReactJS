@@ -17,7 +17,12 @@ export const addItem = async (title, desc, userData, items) => {
     updatedList = [...items, todo];
     saveToLocalStorage(updatedList, userData.user.userName);
   } else {
-    const newItem = new TodoModel(title, desc);
+    const newItem = new TodoModel(
+      title,
+      desc,
+      Math.random() * 100,
+      Math.random() * 100
+    );
     updatedList = [...items, newItem];
     saveToLocalStorage(updatedList);
   }
